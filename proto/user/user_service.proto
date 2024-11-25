@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package proto;
+
+import "proto/user/create_user_req.proto";
+import "proto/user/create_user_res.proto";
+
+option go_package = "github.com/famesensor/playgroud-go-grpc/proto/user";
+
+service UserService {
+    rpc CreateUser(CreateUserReq) returns (CreateUserResp);
+}
+

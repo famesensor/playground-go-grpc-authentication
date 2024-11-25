@@ -1,0 +1,10 @@
+syntax="proto3";
+
+package proto;
+
+option go_package = "github.com/famesensor/playgroud-go-grpc/proto/user";
+
+message CreateUserReq {
+    string username = 1;
+    string password = 2;
+}
