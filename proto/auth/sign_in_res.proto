@@ -1,0 +1,11 @@
+syntax="proto3";
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/famesensor/playground-go-grpc/proto/auth";
+
+message SignInRes {
+    google.protobuf.Timestamp  timestamp = 1;
+}

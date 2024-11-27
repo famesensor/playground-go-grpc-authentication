@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package proto;
+
+import "proto/auth/sign_in_req.proto";
+import "proto/auth/sign_in_res.proto";
+
+option go_package = "github.com/famesensor/playground-go-grpc/proto/auth";
+
+service AuthService {
+    rpc SignIn(SignInReq) returns (SignInRes);
+}
+
