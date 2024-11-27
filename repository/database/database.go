@@ -20,15 +20,21 @@ func NewDatabase(db *cache.Cache) port.DatabasePort {
 }
 
 func (d *databasePort) Create(ctx context.Context, req *model.CreateUserReq) error {
-	d.db.Set(req.ID, req, -1)
-	d.db.Set(req.Username, req, -1)
+	user := &User{
+		ID:        req.ID,
+		Username:  req.Username,
+		Password:  req.Password,
+		CreatedAt: req.CreatedAt,
+	}
+	d.db.Set(req.ID, user, -1)
+	d.db.Set(req.Username, user, -1)
 	return nil
 }
 
 func (d *databasePort) GetByID(ctx context.Context, id string) (*model.User, error) {
 	res, ok := d.db.Get(id)
 	if !ok {
-		return nil, errors.New("not found")
+		return nil, errors.New("user not found")
 	}
 	user := res.(*User)
 	return user.ToUserModel(), nil
@@ -37,7 +43,7 @@ func (d *databasePort) GetByID(ctx context.Context, id string) (*model.User, err
 func (d *databasePort) GetByUsername(ctx context.Context, username string) (*model.User, error) {
 	res, ok := d.db.Get(username)
 	if !ok {
-		return nil, errors.New("not found")
+		return nil, errors.New("user not found")
 	}
 	user := res.(*User)
 	return user.ToUserModel(), nil
