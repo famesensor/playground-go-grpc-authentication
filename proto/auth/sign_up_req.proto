@@ -4,6 +4,7 @@ package proto;
 
 option go_package = "github.com/famesensor/playground-go-grpc/proto/auth";
 
-message SignInRes {
-    string accessToken = 1;
+message SignUpReq {
+    string username = 1;
+    string password = 2;
 }

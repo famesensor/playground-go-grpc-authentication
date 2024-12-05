@@ -24,6 +24,26 @@ func NewAuthHandler(authService auth.Port, validate *validator.Validate) proto.A
 }
 
 func (h *authHandler) SignIn(ctx context.Context, req *proto.SignInReq) (*proto.SignInRes, error) {
+	body := model.SignInReq{
+		Username: req.Username,
+		Password: req.Password,
+	}
+
+	if err := h.validate.Struct(&body); err != nil {
+		return nil, err
+	}
+
+	res, err := h.authService.SignIn(ctx, &body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &proto.SignInRes{
+		AccessToken: res.AccessToken,
+	}, nil
+}
+
+func (h *authHandler) SignUp(ctx context.Context, req *proto.SignUpReq) (*proto.SignUpRes, error) {
 	body := model.SignUpReq{
 		Username: req.Username,
 		Password: req.Password,
@@ -37,7 +57,7 @@ func (h *authHandler) SignIn(ctx context.Context, req *proto.SignInReq) (*proto.
 		return nil, err
 	}
 
-	return &proto.SignInRes{
+	return &proto.SignUpRes{
 		Timestamp: timestamppb.Now(),
 	}, nil
 }

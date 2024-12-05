@@ -4,10 +4,13 @@ package proto;
 
 import "proto/auth/sign_in_req.proto";
 import "proto/auth/sign_in_res.proto";
+import "proto/auth/sign_up_req.proto";
+import "proto/auth/sign_up_res.proto";
 
 option go_package = "github.com/famesensor/playground-go-grpc/proto/auth";
 
 service AuthService {
     rpc SignIn(SignInReq) returns (SignInRes);
+    rpc SignUp(SignUpReq) returns (SignUpRes);
 }
 

@@ -21,10 +21,11 @@ func main() {
 
 	db := cache.New(5*time.Minute, 10*time.Minute)
 	validate := validator.New()
+	jwtManager := helper.NewJWTManager("secret", "go-grpc-authentication", 10)
 
 	databaseAdapter := database.NewDatabase(db)
 
-	services := service.NewService(databaseAdapter, helper.NewUUID())
+	services := service.NewService(databaseAdapter, helper.NewUUID(), jwtManager)
 
 	s := grpc.NewServer()
 	auth.RegisterAuthServiceServer(s, handler.NewAuthHandler(services.AuthService, validate))

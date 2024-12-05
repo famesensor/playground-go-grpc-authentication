@@ -10,16 +10,19 @@ import (
 
 type Port interface {
 	SignUp(context.Context, *model.SignUpReq) error
+	SignIn(context.Context, *model.SignInReq) (*model.SignInRes, error)
 }
 
 type service struct {
-	database port.DatabasePort
-	uuid     helper.UUID
+	database   port.DatabasePort
+	uuid       helper.UUID
+	jwtManager helper.JWTManager
 }
 
-func NewService(database port.DatabasePort, uuid helper.UUID) Port {
+func NewService(database port.DatabasePort, uuid helper.UUID, jwtManager helper.JWTManager) Port {
 	return &service{
 		database,
 		uuid,
+		jwtManager,
 	}
 }

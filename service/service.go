@@ -8,10 +8,11 @@ import (
 
 type service struct {
 	AuthService auth.Port
+	jwtManager  helper.JWTManager
 }
 
-func NewService(database port.DatabasePort, uuid helper.UUID) *service {
+func NewService(database port.DatabasePort, uuid helper.UUID, jwtManager helper.JWTManager) *service {
 	return &service{
-		AuthService: auth.NewService(database, uuid),
+		AuthService: auth.NewService(database, uuid, jwtManager),
 	}
 }
