@@ -35,6 +35,7 @@ This project is an example of how to implement authentication in a Go gRPC servi
 
 ### Future Improvements
 
+* Add client(gRPC)
 * Add error handling and logging
 * Add health check
 * Add TLS
