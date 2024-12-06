@@ -9,7 +9,7 @@ import (
 
 type JWTManager interface {
 	Generate(string, string) (string, error)
-	Verification(string) (*claims, error)
+	Verification(string) (*UserClaims, error)
 }
 
 type jwtManager struct {
@@ -18,7 +18,7 @@ type jwtManager struct {
 	expiryTime int
 }
 
-type claims struct {
+type UserClaims struct {
 	ID       string `json:"id"`
 	Username string `json:"username"`
 	jwt.RegisteredClaims
@@ -43,10 +43,10 @@ func (j *jwtManager) Generate(id, username string) (string, error) {
 }
 
 // Verification implements JWTManager.
-func (j *jwtManager) Verification(token string) (*claims, error) {
+func (j *jwtManager) Verification(token string) (*UserClaims, error) {
 	tk, err := jwt.ParseWithClaims(
 		token,
-		&claims{},
+		&UserClaims{},
 		func(t *jwt.Token) (interface{}, error) {
 			_, ok := t.Method.(*jwt.SigningMethodHMAC)
 			if !ok {
@@ -61,7 +61,7 @@ func (j *jwtManager) Verification(token string) (*claims, error) {
 		return nil, fmt.Errorf("invalid token: %w", err)
 	}
 
-	claims, ok := tk.Claims.(*claims)
+	claims, ok := tk.Claims.(*UserClaims)
 	if !ok {
 		return nil, fmt.Errorf("invalid token claims")
 	}
@@ -69,9 +69,9 @@ func (j *jwtManager) Verification(token string) (*claims, error) {
 	return claims, nil
 }
 
-func (j *jwtManager) buildClaim(id, username string) *claims {
+func (j *jwtManager) buildClaim(id, username string) *UserClaims {
 	now := time.Now()
-	return &claims{
+	return &UserClaims{
 		ID:       id,
 		Username: username,
 		RegisteredClaims: jwt.RegisteredClaims{

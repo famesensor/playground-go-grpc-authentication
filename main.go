@@ -6,8 +6,10 @@ import (
 	"net"
 	"time"
 
+	"github.com/famesensor/playground-go-grpc-authentication/constant"
 	"github.com/famesensor/playground-go-grpc-authentication/handler"
 	"github.com/famesensor/playground-go-grpc-authentication/helper"
+	"github.com/famesensor/playground-go-grpc-authentication/interceptor"
 	"github.com/famesensor/playground-go-grpc-authentication/proto/auth"
 	"github.com/famesensor/playground-go-grpc-authentication/proto/user"
 	"github.com/famesensor/playground-go-grpc-authentication/repository/database"
@@ -27,9 +29,11 @@ func main() {
 
 	services := service.NewService(databaseAdapter, helper.NewUUID(), jwtManager)
 
-	s := grpc.NewServer()
+	interceptor := interceptor.NewAuthInterceptor(jwtManager, constant.SkipPath)
+
+	s := grpc.NewServer(grpc.UnaryInterceptor(interceptor.Unary()))
 	auth.RegisterAuthServiceServer(s, handler.NewAuthHandler(services.AuthService, validate))
-	user.RegisterUserServiceServer(s, handler.NewUserHandler())
+	user.RegisterUserServiceServer(s, handler.NewUserHandler(services.UserService))
 
 	port := 9000
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))

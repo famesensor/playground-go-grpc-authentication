@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package proto;
 
-import "proto/user/create_user_req.proto";
-import "proto/user/create_user_res.proto";
+import "proto/user/get_user_me_req.proto";
+import "proto/user/user.proto";
 
 option go_package = "github.com/famesensor/playground-go-grpc/proto/user";
 
 service UserService {
-    rpc CreateUser(CreateUserReq) returns (CreateUserResp);
+    rpc GetUserMe(GetUserMeReq) returns (User);
 }
 
