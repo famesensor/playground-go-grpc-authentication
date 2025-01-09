@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/famesensor/ghelper"
+	"github.com/famesensor/playground-go-grpc-authentication/pkgs/ghelper"
 	"github.com/famesensor/playground-go-grpc-authentication/port"
 	"github.com/famesensor/playground-go-grpc-authentication/service/auth"
 	"github.com/famesensor/playground-go-grpc-authentication/service/user"
