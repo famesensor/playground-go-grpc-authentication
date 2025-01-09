@@ -12,7 +12,7 @@ type service struct {
 	UserService user.Port
 }
 
-func NewService(database port.DatabasePort, uuid ghelper.UUID, jwtManager ghelper.JWTManager) *service {
+func NewService(database port.DatabasePort, uuid ghelper.Uuider, jwtManager ghelper.JWTManager) *service {
 	return &service{
 		AuthService: auth.NewService(database, uuid, jwtManager),
 		UserService: user.NewService(database),
