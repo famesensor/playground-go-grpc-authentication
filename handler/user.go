@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/famesensor/ghelper"
 	"github.com/famesensor/playground-go-grpc-authentication/constant"
-	"github.com/famesensor/playground-go-grpc-authentication/helper"
 	proto "github.com/famesensor/playground-go-grpc-authentication/proto/user"
 	"github.com/famesensor/playground-go-grpc-authentication/service/user"
 	"google.golang.org/grpc/codes"
@@ -23,7 +23,7 @@ func NewUserHandler(userService user.Port) proto.UserServiceServer {
 }
 
 func (u *userHandler) GetUserMe(ctx context.Context, req *proto.GetUserMeReq) (*proto.User, error) {
-	user, ok := ctx.Value(constant.UserCtxKey).(*helper.UserClaims)
+	user, ok := ctx.Value(constant.UserCtxKey).(*ghelper.UserClaims)
 	if !ok {
 		return nil, status.Errorf(codes.DataLoss, "user not found")
 	}

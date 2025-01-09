@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
+	"github.com/famesensor/ghelper"
 	"github.com/famesensor/playground-go-grpc-authentication/constant"
-	"github.com/famesensor/playground-go-grpc-authentication/helper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -17,11 +17,11 @@ type AuthInterceptor interface {
 }
 
 type authInterceptor struct {
-	jwtManager helper.JWTManager
+	jwtManager ghelper.JWTManager
 	skipPath   map[string]struct{}
 }
 
-func NewAuthInterceptor(jwtManager helper.JWTManager, skipPaths map[string]struct{}) AuthInterceptor {
+func NewAuthInterceptor(jwtManager ghelper.JWTManager, skipPaths map[string]struct{}) AuthInterceptor {
 	return &authInterceptor{jwtManager, skipPaths}
 }
 
@@ -46,7 +46,7 @@ func (interceptor *authInterceptor) Unary() grpc.UnaryServerInterceptor {
 	}
 }
 
-func (interceptor *authInterceptor) authorize(ctx context.Context, method string) (*helper.UserClaims, error) {
+func (interceptor *authInterceptor) authorize(ctx context.Context, method string) (*ghelper.UserClaims, error) {
 	if _, ok := interceptor.skipPath[method]; ok {
 		return nil, nil
 	}

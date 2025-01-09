@@ -6,9 +6,9 @@ import (
 	"net"
 	"time"
 
+	"github.com/famesensor/ghelper"
 	"github.com/famesensor/playground-go-grpc-authentication/constant"
 	"github.com/famesensor/playground-go-grpc-authentication/handler"
-	"github.com/famesensor/playground-go-grpc-authentication/helper"
 	"github.com/famesensor/playground-go-grpc-authentication/interceptor"
 	"github.com/famesensor/playground-go-grpc-authentication/proto/auth"
 	"github.com/famesensor/playground-go-grpc-authentication/proto/user"
@@ -23,11 +23,11 @@ func main() {
 
 	db := cache.New(5*time.Minute, 10*time.Minute)
 	validate := validator.New()
-	jwtManager := helper.NewJWTManager("secret", "go-grpc-authentication", 10)
+	jwtManager := ghelper.NewJWTManager("secret", "go-grpc-authentication", 10)
 
 	databaseAdapter := database.NewDatabase(db)
 
-	services := service.NewService(databaseAdapter, helper.NewUUID(), jwtManager)
+	services := service.NewService(databaseAdapter, ghelper.NewUUID(), jwtManager)
 
 	interceptor := interceptor.NewAuthInterceptor(jwtManager, constant.SkipPath)
 
