@@ -3,7 +3,7 @@ module github.com/famesensor/playground-go-grpc-authentication
 go 1.23.3
 
 require (
-	github.com/famesensor/ghelper v0.0.0-00010101000000-000000000000
+	github.com/famesensor/ghelper v0.0.0-20250109145832-f05cd4712d9e
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	google.golang.org/grpc v1.69.2
@@ -24,4 +24,4 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250106144421-5f5ef82da422 // indirect
 )
 
-replace github.com/famesensor/ghelper => ./pkgs/ghelper
+replace github.com/famesensor/ghelper => ./ghelper
