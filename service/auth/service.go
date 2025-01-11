@@ -15,11 +15,11 @@ type Port interface {
 
 type service struct {
 	database   port.DatabasePort
-	uuid       ghelper.Uuider
+	uuid       ghelper.UUID
 	jwtManager ghelper.JWTManager
 }
 
-func NewService(database port.DatabasePort, uuid ghelper.Uuider, jwtManager ghelper.JWTManager) Port {
+func NewService(database port.DatabasePort, uuid ghelper.UUID, jwtManager ghelper.JWTManager) Port {
 	return &service{
 		database,
 		uuid,
